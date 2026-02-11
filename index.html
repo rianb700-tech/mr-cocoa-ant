@@ -425,36 +425,36 @@
 
     <section id="contact">
       <h2 class="section-title">聯絡我們</h2>
-      <p class="section-sub"></p>
+      <p class="section-sub">你可以先用表單留下訊息（示範模式），或直接替換下方 Email/電話為你們的真實資訊。</p>
       <div class="grid cols-2">
         <div class="card">
           <h3>聯絡資訊</h3>
           <ul class="list">
             <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">NPUSTfs101@gmail.com</span></span></li>
-            <li><span class="tick">✓</span><span><b>LINE：</b>掃描下方 QR 加入</span></li>
+            <li><span class="tick">✓</span><span><b>LINE：</b>掃描右側 QR 加入</span></li>
 </ul>
         <div class="line-qr">
           <img src="images/line-qr.png" alt="LINE QR Code">
         </div>
 
-          <p style="margin-top:10px;color:var(--muted);font-size:12px"></p>
+          <p style="margin-top:10px;color:var(--muted);font-size:12px">要讓表單真的寄到信箱：可接 Formspree 或你們後端 API。</p>
         </div>
         <div class="card">
           <h3>快速留言</h3>
           <form id="contactForm">
             <div class="contact-grid">
-              <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required id="formName"></div>
+              <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required></div>
               <div><label for="company">公司/單位</label><input id="company" name="company" placeholder="（選填）"></div>
-              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="NPUSTfs101@gmail.com" required id="formEmail"></div>
-              <div><label for="topic">想了解</label><input id="topic" name="topic" placeholder="舒眠巧克力 / 原料合作 / 生物炭應用..." id="formTopic"></div>
+              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="NPUSTfs101@gmail.com" required></div>
+              <div><label for="topic">想了解</label><input id="topic" name="topic" placeholder="舒眠巧克力 / 原料合作 / 生物炭應用..."></div>
             </div>
             <div style="margin-top:12px">
               <label for="message">訊息內容</label>
-              <textarea id="message" name="message"  id="formMsg" placeholder="請簡述你的需求，我們會盡快回覆。" required></textarea>
+              <textarea id="message" name="message" placeholder="請簡述你的需求，我們會盡快回覆。" required></textarea>
             </div>
             <div class="btns" style="margin-top:12px">
-              <button class="btn" type="submit" id="sendMsgBtn">送出訊息</button>
-              <button class="btn secondary" type="button" id="copyEmail" id="copyEmailBtn">複製 Email</button>
+              <button class="btn" type="submit">送出訊息</button>
+              <button class="btn secondary" type="button" id="copyEmail">複製 Email</button>
             </div>
             <div id="formNote" style="margin-top:10px;color:var(--muted);font-size:12px" aria-live="polite"></div>
           </form>
@@ -476,60 +476,27 @@
     </footer>
   </main>
 
-<script>
-  const CONTACT_EMAIL = "NPUSTfs101@gmail.com";
-  const GOOGLE_FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/viewform?usp=pp_url";
-  const ENTRY_NAME = "1764960524";
-  const ENTRY_EMAIL = "658803557";
-  const ENTRY_MSG = "215893928";
+  <script>
+    const CONTACT = { email: "NPUSTfs101@gmail.com", phone: "02-1234-5678" };
+    document.getElementById("emailText").textContent = CONTACT.email;
+    document.getElementById("phoneText").textContent = CONTACT.phone;
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Copy email button
-  document.getElementById("copyEmailBtn")?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(CONTACT_EMAIL);
-      alert("已複製 Email：" + CONTACT_EMAIL);
-    } catch (e) {
-      const ta = document.createElement("textarea");
-      ta.value = CONTACT_EMAIL;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
-      alert("已複製 Email：" + CONTACT_EMAIL);
-    }
-  });
+    document.getElementById("copyEmail").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(CONTACT.email); toast("已複製 Email：" + CONTACT.email); }
+      catch (e) { toast("複製失敗，請手動複製：" + CONTACT.email); }
+    });
 
-  // Send message -> open Google Form with prefilled fields
-  document.getElementById("sendMsgBtn")?.addEventListener("click", async () => {
-    const name = document.getElementById("formName")?.value?.trim() || "";
-    const org  = document.getElementById("formOrg")?.value?.trim()  || "";
-    const from = document.getElementById("formEmail")?.value?.trim()|| "";
-    const topic= document.getElementById("formTopic")?.value?.trim()|| "";
-    const msg  = document.getElementById("formMsg")?.value?.trim()  || "";
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      toast(`已收到（示範模式未送出）：\n姓名：${data.name}\nEmail：${data.email}\n主題：${data.topic || "-"}\n訊息：${data.message}`);
+      e.target.reset();
+    });
 
-    const mergedMsg = [
-      org ? `公司/單位：${org}` : "",
-      topic ? `想了解：${topic}` : "",
-      msg ? `
-${msg}` : ""
-    ].filter(Boolean).join("
-");
-
-    const url = `${GOOGLE_FORM_BASE}&entry.${ENTRY_NAME}=${encodeURIComponent(name)}&entry.${ENTRY_EMAIL}=${encodeURIComponent(from)}&entry.${ENTRY_MSG}=${encodeURIComponent(mergedMsg)}`;
-
-    // backup: also copy full payload for easy paste if needed
-    const payload = `姓名：${name}
-公司/單位：${org}
-聯絡Email：${from}
-想了解：${topic}
-
-訊息內容：
-${msg}`;
-    try { await navigator.clipboard.writeText(payload); } catch(e){}
-
-    window.open(url, "_blank", "noopener,noreferrer");
-  });
-</script>
-
+    const note = document.getElementById("formNote");
+    let t;
+    function toast(text){ clearTimeout(t); note.textContent = text; t = setTimeout(() => { note.textContent = ""; }, 4200); }
+  </script>
 </body>
 </html>
