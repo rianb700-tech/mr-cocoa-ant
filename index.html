@@ -242,6 +242,12 @@
     #award .award-img{width:50%; height:auto; border-radius:16px; display:block; margin:0 auto}
     @media (max-width: 920px){ #award .award-img{width:92%} }
 
+
+    /* LINE QR */
+    .line-qr{margin-top:14px; display:flex; justify-content:flex-start}
+    .line-qr img{width:160px; height:160px; object-fit:contain; border-radius:14px; border:1px solid rgba(140,120,80,.18); background:#fff}
+    @media (max-width: 920px){ .line-qr{justify-content:center} }
+
 </style>
 </head>
 <body>
@@ -419,15 +425,19 @@
 
     <section id="contact">
       <h2 class="section-title">聯絡我們</h2>
-      <p class="section-sub">你可以先用表單留下訊息（示範模式），或直接替換下方 Email/電話為你們的真實資訊。</p>
+      <p class="section-sub"></p>
       <div class="grid cols-2">
         <div class="card">
           <h3>聯絡資訊</h3>
           <ul class="list">
-            <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">contact@yourcompany.com</span></span></li>
-            <li><span class="tick">✓</span><span><b>電話：</b><span id="phoneText">02-1234-5678</span></span></li>
-          </ul>
-          <p style="margin-top:10px;color:var(--muted);font-size:12px">要讓表單真的寄到信箱：可接 Formspree 或你們後端 API。</p>
+            <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">NPUSTfs101@gmail.com</span></span></li>
+            <li><span class="tick">✓</span><span><b>LINE：</b>掃描下方 QR 加入</span></li>
+</ul>
+        <div class="line-qr">
+          <img src="images/line-qr.png" alt="LINE QR Code">
+        </div>
+
+          <p style="margin-top:10px;color:var(--muted);font-size:12px"></p>
         </div>
         <div class="card">
           <h3>快速留言</h3>
@@ -435,7 +445,7 @@
             <div class="contact-grid">
               <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required></div>
               <div><label for="company">公司/單位</label><input id="company" name="company" placeholder="（選填）"></div>
-              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="name@example.com" required></div>
+              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="NPUSTfs101@gmail.com" required></div>
               <div><label for="topic">想了解</label><input id="topic" name="topic" placeholder="舒眠巧克力 / 原料合作 / 生物炭應用..."></div>
             </div>
             <div style="margin-top:12px">
@@ -467,7 +477,7 @@
   </main>
 
   <script>
-    const CONTACT = { email: "contact@yourcompany.com", phone: "02-1234-5678" };
+    const CONTACT = { email: "NPUSTfs101@gmail.com", phone: "02-1234-5678" };
     document.getElementById("emailText").textContent = CONTACT.email;
     document.getElementById("phoneText").textContent = CONTACT.phone;
     document.getElementById("year").textContent = new Date().getFullYear();
