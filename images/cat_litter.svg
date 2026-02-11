@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7eddc"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c98a4a"/>
+      <stop offset="1" stop-color="#8a4b1e"/>
+    </linearGradient>
+    <linearGradient id="paw" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6a5acd"/>
+      <stop offset="1" stop-color="#c23c8a"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="560" rx="34" fill="url(#bg)"/>
+
+  <!-- litter box -->
+  <g filter="url(#shadow)">
+    <path d="M160 330
+             Q160 300 190 300
+             H710
+             Q740 300 740 330
+             V420
+             Q740 460 700 460
+             H200
+             Q160 460 160 420
+             Z" fill="url(#box)"/>
+    <path d="M190 320
+             Q190 310 202 310
+             H698
+             Q710 310 710 320
+             V395
+             Q710 430 678 430
+             H222
+             Q190 430 190 395
+             Z" fill="#f2c27a" opacity="0.45"/>
+  </g>
+
+  <!-- litter grains -->
+  <g opacity="0.85">
+    <circle cx="250" cy="360" r="8" fill="#7b4a12"/>
+    <circle cx="290" cy="372" r="6" fill="#7b4a12"/>
+    <circle cx="330" cy="355" r="7" fill="#7b4a12"/>
+    <circle cx="370" cy="380" r="6" fill="#7b4a12"/>
+    <circle cx="415" cy="360" r="8" fill="#7b4a12"/>
+    <circle cx="460" cy="375" r="6" fill="#7b4a12"/>
+    <circle cx="505" cy="356" r="7" fill="#7b4a12"/>
+    <circle cx="550" cy="382" r="6" fill="#7b4a12"/>
+    <circle cx="595" cy="362" r="8" fill="#7b4a12"/>
+    <circle cx="640" cy="376" r="6" fill="#7b4a12"/>
+  </g>
+
+  <!-- paw print -->
+  <g transform="translate(0,0)" filter="url(#shadow)">
+    <ellipse cx="450" cy="210" rx="70" ry="58" fill="url(#paw)"/>
+    <circle cx="380" cy="145" r="26" fill="url(#paw)"/>
+    <circle cx="425" cy="120" r="24" fill="url(#paw)"/>
+    <circle cx="475" cy="120" r="24" fill="url(#paw)"/>
+    <circle cx="520" cy="145" r="26" fill="url(#paw)"/>
+  </g>
+
+  <!-- label -->
+  <text x="450" y="520" text-anchor="middle"
+        font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Arial, sans-serif"
+        font-size="30" fill="#5f6368">可可生物炭貓砂（示意圖）</text>
+</svg>

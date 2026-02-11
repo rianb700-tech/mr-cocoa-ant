@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LIGHT UP! 可可研究所｜可可全果高值化利用：GABA 舒眠巧克力、GABA 舒眠可可茶包、天然 GABA 原料與可可生物炭永續應用。" />
+  <title>LIGHT UP! 可可研究所｜一頁式產品介紹</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#1b1b1f;
+      --muted:#5f6368;
+      --line:#e6e7eb;
+      --accent:#7b4a12;
+      --accent2:#f2c27a;
+      --accent3:#1b8a8f; /* teal */
+      --accent4:#6a5acd; /* indigo */
+      --accent5:#c23c8a; /* magenta */
+      --shadow: 0 12px 30px rgba(0,0,0,.08);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      background: var(--bg);
+      color:var(--text);
+      line-height:1.65;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.85);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:14px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+    .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+    .brand-icon{width:22px;height:22px;object-fit:contain;filter: drop-shadow(0 8px 18px rgba(0,0,0,.10))}
+    .nav-links{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+    .nav-links a{font-size:14px; color:var(--muted); padding:8px 10px; border-radius:999px; border:1px solid transparent}
+    .nav-links a:hover{color:var(--text); border-color:rgba(123,74,18,.18); background:rgba(123,74,18,.06)}
+    .btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:20px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px; border-radius:999px; font-weight:800;
+      border:1px solid rgba(123,74,18,.35);
+      background: rgba(123,74,18,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(123,74,18,.12); border-color: rgba(123,74,18,.55)}
+    .btn.secondary{border-color:rgba(123,74,18,.18); background: rgba(242,194,122,.22)}
+    .btn.secondary:hover{background: rgba(242,194,122,.30); border-color: rgba(123,74,18,.35)}
+    section{padding:46px 0}
+    h1{margin:14px 0 10px; font-size:42px; line-height:1.15; letter-spacing:-.6px}
+    .lead{font-size:18px; color:var(--muted); max-width:64ch}
+    .kicker{display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:14px}
+    .kicker .pill{padding:6px 10px; border:1px solid rgba(123,74,18,.20); background:rgba(242,194,122,.18); border-radius:999px}
+    .hero{padding:58px 0 22px}
+    .hero-grid{display:grid; grid-template-columns: 1.25fr .75fr; gap:22px; align-items:stretch}
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .hero-card{background: linear-gradient(180deg, rgba(242,194,122,.22), rgba(255,255,255,.98));}
+    .stat{display:flex; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid var(--line)}
+    .badge{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent2),#fff3e0);border:1px solid rgba(123,74,18,.22);color:#7b4a12; font-weight:900}
+    .section-title{font-size:28px; margin:0 0 10px}
+    .section-sub{color:var(--muted); margin:0 0 18px; max-width:72ch}
+    .grid{display:grid; gap:16px}
+    .grid.cols-2{grid-template-columns: repeat(2, minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns: repeat(3, minmax(0,1fr))}
+    .card h3{margin:0 0 8px; font-size:18px}
+    .card p{margin:0; color:var(--muted)}
+    .list{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px}
+    .list li{display:flex; gap:10px; align-items:flex-start; color:var(--muted)}
+    .tick{color:var(--accent); font-weight:900; margin-top:1px}
+    .tagrow{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{font-size:12px; color:var(--muted); padding:6px 10px; border-radius:999px; border:1px solid var(--line); background:#fff}
+    .tag.accent{border-color:rgba(123,74,18,.18); background:rgba(242,194,122,.18)}
+    .tag.blue{border-color:rgba(139,211,255,.25); background:rgba(139,211,255,.10)}
+    .img{width:100%; border-radius:14px; border:1px solid var(--line)}
+    .cta{
+      background: linear-gradient(135deg, rgba(242,194,122,.25), rgba(255,255,255,.85));
+      border:1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      padding:22px;
+      box-shadow: var(--shadow);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    }
+    .cta h2{margin:0 0 8px; font-size:24px}
+    .cta p{margin:0; color:var(--muted); max-width:70ch}
+    .contact-grid{display:grid; grid-template-columns: 1fr 1fr; gap:16px}
+    label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      outline:none;
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    }
+    input:focus, textarea:focus{border-color: rgba(123,74,18,.55); box-shadow: 0 8px 22px rgba(123,74,18,.12)}
+    textarea{min-height:120px; resize:vertical}
+    footer{padding:28px 0 40px; border-top:1px solid var(--line); color:var(--muted)}
+    .foot{display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap}
+
+    .impact-head{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+    .impact-icon{width:120px; height:120px; border-radius:34px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(140,120,80,.18)}
+    .impact-icon img{width:78px;height:78px;object-fit:cover;border-radius:14px}
+    .impact-title{font-size:20px; font-weight:900; letter-spacing:-.2px}
+    .impact-title.grow{background:linear-gradient(90deg, var(--accent4), var(--accent5)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-title.sus{background:linear-gradient(90deg, var(--accent3), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-title.coop{background:linear-gradient(90deg, var(--accent), var(--accent4)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-icon.grow{border-color:rgba(194,60,138,.22); background:linear-gradient(135deg, rgba(194,60,138,.14), rgba(242,194,122,.22))}
+    .impact-icon.sus{border-color:rgba(27,138,143,.22); background:linear-gradient(135deg, rgba(27,138,143,.12), rgba(255,255,255,.95))}
+    .impact-icon.coop{border-color:rgba(106,90,205,.22); background:linear-gradient(135deg, rgba(106,90,205,.12), rgba(255,255,255,.95))}
+
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns: 1fr}
+      h1{font-size:36px}
+      .grid.cols-3,.grid.cols-2{grid-template-columns: 1fr}
+      .contact-grid{grid-template-columns: 1fr}
+    }
+  
+    /* ---- Bigger & more colorful ---- */
+    body{font-size:17px; line-height:1.78;}
+    h1{
+      font-size:54px;
+      line-height:1.12;
+      letter-spacing:-.9px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3), var(--accent5));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{font-size:20px;}
+    .section-title{font-size:34px; color: var(--accent);}
+    .nav-links a{font-size:15px;}
+    .tag{font-size:13px;}
+    .colorful{
+      background: linear-gradient(90deg, var(--accent4), var(--accent3), var(--accent5));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    /* Impact (bigger + colorful) */
+    .impact-head{display:flex; align-items:center; gap:12px; margin-bottom:10px}
+    .impact-icon{width:46px; height:46px; border-radius:16px; display:grid; place-items:center; border:1px solid var(--line);
+      background:linear-gradient(135deg, rgba(255,211,106,.22), rgba(255,255,255,.96));
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    .impact-icon img{width:30px;height:30px;object-fit:contain;filter:saturate(1.08) contrast(1.04)}
+    .impact-title{font-size:22px; font-weight:900; letter-spacing:-.3px; line-height:1.1}
+    .impact-title.grow{background:linear-gradient(90deg, var(--accent4), var(--accent5)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-title.sus{background:linear-gradient(90deg, var(--accent3), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-title.coop{background:linear-gradient(90deg, var(--accent), var(--accent4)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .impact-icon.grow{border-color:rgba(194,60,138,.22); background:linear-gradient(135deg, rgba(194,60,138,.14), rgba(255,211,106,.18))}
+    .impact-icon.sus{border-color:rgba(27,138,143,.22); background:linear-gradient(135deg, rgba(27,138,143,.12), rgba(255,255,255,.96))}
+    .impact-icon.coop{border-color:rgba(106,90,205,.22); background:linear-gradient(135deg, rgba(106,90,205,.12), rgba(255,255,255,.96))}
+    #impact .card p{font-size:16px; color:#4a4f57}
+
+
+    /* Typography: headings use a slightly more premium serif */
+    h1, .section-title, .impact-title, .cta h2{
+      font-family: "Noto Serif TC","Noto Serif","PMingLiU","Songti TC",serif;
+    }
+
+
+        /* Product cards with images */
+    .product-card{padding:0; overflow:hidden}
+    .product-card .pc-body{padding:18px}
+    .product-img{
+      width:100%;
+      height:120px;
+      object-fit:contain; /* keep product visible */
+      object-position:center;
+      display:block;
+      background: linear-gradient(135deg, rgba(242,194,122,.14), rgba(255,255,255,.96));
+      border-bottom:1px solid var(--line);
+    }
+
+    /* Product gallery sizing (slightly smaller) */
+    .product-gallery .card{padding:14px}
+    .product-gallery .img{height:110px; object-fit:cover}
+    .product-gallery .note{font-size:12px}
+
+    @media (max-width: 920px){
+      .product-img{height:150px}
+      .product-gallery .img{height:140px}
+    }
+
+
+
+    /* Product gallery sizing (make it a bit smaller than product cards) */
+    .product-gallery .card{padding:14px}
+    .product-gallery .img{height:120px; object-fit:cover}
+    .product-gallery .note{font-size:12px}
+    /* Product card image sizing harmony */
+    .product-img{height:150px}
+    @media (max-width: 920px){
+      .product-gallery .img{height:150px}
+      .product-img{height:175px}
+    }
+
+
+    /* Hero stats: add a bit more spacing between the 3 items */
+    .hero-card .stat{margin-bottom:12px}
+    .hero-card .stat:last-child{margin-bottom:0}
+
+
+    /* Hero stats: evenly distribute inside the hero card */
+    .hero-card{display:flex; flex-direction:column; justify-content:space-between}
+    .hero-card .stat{margin-bottom:0}
+
+
+    /* Impact '永續' icon: make frame bigger and avoid cropping */
+    .impact-icon.sus{width:120px;height:120px}
+    .impact-icon.sus img{width:92px;height:92px;object-fit:contain;border-radius:14px}
+
+
+    /* Impact icons: unify sizing like SDG12 card */
+    .impact-icon{width:120px;height:120px}
+    .impact-icon img{width:92px;height:92px;object-fit:contain;border-radius:16px}
+
+
+    /* Award section */
+    #award .award-card{padding:14px; max-width:920px; margin:0 auto; text-align:center; background:#fff}
+    #award .award-img{width:50%; height:auto; border-radius:16px; display:block; margin:0 auto}
+    @media (max-width: 920px){ #award .award-img{width:92%} }
+
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="回到頂部">
+          <span class="dot" aria-hidden="true"></span>
+          <img class="brand-icon" src="images/image17.png" alt="Mr. cocoa ANT / 品牌圖示">
+          <span>LIGHT UP! 可可研究所</span>
+        </a>
+        <nav class="nav-links" aria-label="主導覽">
+          <a href="#problem">問題</a>
+          <a href="#solution">解方</a>
+<a href="#products">產品</a>
+          <a href="#why">優勢</a>
+          <a href="#impact">影響力</a>
+          <a href="#contact">聯絡</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero" aria-label="主視覺">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">
+            <span class="pill">可可全果高值化利用</span>
+            <span>｜舒眠 × 日常飲食 × 永續應用</span>
+          </div>
+          <h1>從一顆可可開始，<br>點亮睡眠、健康與永續的日常</h1>
+          <p class="lead">
+            我們將台灣可可產業中被忽略的副產物（發芽可可豆、果殼、果莢），透過科學萃取與材料轉化，
+            開發「機能性食品」與「永續生活用品」，讓健康與循環經濟能同時被實現。
+          </p>
+          <div class="btns">
+            <a class="btn" href="#products">探索產品</a>
+            <a class="btn secondary" href="#contact">聯絡我們</a>
+          </div>
+        </div>
+
+        <aside class="card hero-card" aria-label="亮點">
+          <div class="stat"><div class="badge" style="background:linear-gradient(135deg, rgba(194,60,138,.18), rgba(255,211,106,.16)); border-color: rgba(194,60,138,.22)"><img src="images/image84.png" alt="" style="width:24px;height:24px;object-fit:contain" /></div><div><b>天然 GABA 舒眠概念</b><div style="color:var(--muted);font-size:13px;margin-top:2px">非藥物型態、可長期食用，融入日常的放鬆選擇。</div></div></div>
+          <div class="stat"><div class="badge" style="width:53px;height:53px;background:linear-gradient(135deg, rgba(26,127,55,.14), rgba(255,255,255,.9)); border-color: rgba(26,127,55,.22)"><img src="images/sdg12.png" alt="" style="width:41px;height:41px;border-radius:6px" /></div><div><b>可可全果循環利用</b><div style="color:var(--muted);font-size:13px;margin-top:2px">提升原料利用率，降低農業廢棄與環境負擔。</div></div></div>
+          <div class="stat"><div class="badge" style="background:linear-gradient(135deg, rgba(139,211,255,.18), rgba(255,255,255,.9)); border-color: rgba(139,211,255,.30)"><img src="images/image10.jpeg" alt="" style="width:26px;height:26px;border-radius:6px" /></div><div><b>科學驗證與定量</b><div style="color:var(--muted);font-size:13px;margin-top:2px">萃取與定量確保機能成分活性與品質穩定性。</div></div></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="problem">
+      <h2 class="section-title">我們看見的問題</h2>
+      <p class="section-sub">可可副產物利用不足造成浪費；同時現代社會普遍面臨壓力與睡眠品質不佳的挑戰。</p>
+      <div class="grid cols-3">
+        <div class="card"><h3>副產物利用不足</h3><p>發芽可可豆、果殼、果莢常被低價處理或淘汰，造成資源浪費與農民損失。</p></div>
+        <div class="card"><h3>產業成本高、保存不易</h3><p>採後若未即時處理易發芽，原料價值大幅下降。</p></div>
+        <div class="card"><h3>壓力與睡眠困擾</h3><p>市售舒眠產品多為膠囊/藥物型態，日常融入門檻高。</p></div>
+      </div>
+    </section>
+
+    <section id="solution">
+      <h2 class="section-title">我們的解方：可可全果高值化利用</h2>
+      <p class="section-sub">以「農民—研究所—品牌」垂直整合，串聯原料、生產研發與品牌銷售，讓健康促進、農業升級與環境永續同步實現。</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>舒眠 × 日常飲食</h3>
+          <p>以發芽可可豆的天然 GABA，導入巧克力與可可茶包等日常產品形態。</p>
+          <ul class="list">
+            <li><span class="tick">✓</span><span>非藥物型態，低使用門檻</span></li>
+            <li><span class="tick">✓</span><span>嗜好性與機能性兼具</span></li>
+            <li><span class="tick">✓</span><span>品質穩定，適合長期食用</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>副產物再利用 × 循環材料</h3>
+          <p>將可可果殼、果莢轉化為生物炭材料，延伸至寵物除臭與材料應用。</p>
+          <ul class="list">
+            <li><span class="tick">✓</span><span>提升原料利用率、降低廢棄</span></li>
+            <li><span class="tick">✓</span><span>食品級 × 非食品級雙軌分散風險</span></li>
+            <li><span class="tick">✓</span><span>可複製、可擴展的循環經濟模式</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="products">
+      <h2 class="section-title">產品與服務</h2>
+      <p class="section-sub">以「舒眠機能食品」與「永續生活應用」兩大支柱，並提供企業端原料與研發合作。</p>
+
+
+      <div class="grid cols-3">
+        <div class="card product-card">
+          <img class="product-img" src="images/gaba_choco.png" alt="GABA 舒眠巧克力／禮盒">
+          <div class="pc-body">
+            <div class="tagrow">
+              <span class="tag accent">B2C</span>
+              <span class="tag">舒眠</span>
+              <span class="tag">機能性</span>
+            </div>
+            <h3>GABA 舒眠巧克力</h3>
+            <p>以可可結合天然 GABA，打造日常也能輕鬆食用的舒眠機能甜點。</p>
+          </div>
+        </div>
+
+        <div class="card product-card">
+          <img class="product-img" src="images/image128.jpeg" alt="GABA 舒眠可可茶包／包裝">
+          <div class="pc-body">
+            <div class="tagrow">
+              <span class="tag accent">B2C</span>
+              <span class="tag">舒眠</span>
+              <span class="tag">飲品</span>
+            </div>
+            <h3>GABA 舒眠可可茶包</h3>
+            <p>以可可果仁為基底，融合天然 GABA 活性物質，作為日常調理舒眠飲品。</p>
+          </div>
+        </div>
+
+        <div class="card product-card">
+          <img class="product-img" src="images/gaba_raw.png" alt="天然 GABA 原料">
+          <div class="pc-body">
+            <div class="tagrow">
+              <span class="tag blue">B2B</span>
+              <span class="tag">原料</span>
+              <span class="tag">研發合作</span>
+            </div>
+            <h3>天然 GABA 原料</h3>
+            <p>提供高純度天然萃取 GABA，活性穩定，適用於機能食品、飲品與保健配方。</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <section id="award" aria-label="參賽得獎">
+      <h2 class="section-title">參賽得獎</h2>
+      <p class="section-sub">參加「2025發光、發亮.農業生技創新創業競賽」榮獲冠軍。</p>
+      <div class="card award-card">
+        <img class="award-img" src="images/award.png" alt="2025發光、發亮.農業生技創新創業競賽 冠軍得獎照片">
+      </div>
+    </section>
+
+
+    <section id="why">
+      <h2 class="section-title">為什麼選擇 LIGHT UP!</h2>
+      <p class="section-sub">把「產地、研發、品牌」整合在同一條價值鏈上。</p>
+      <div class="grid cols-3">
+        <div class="card"><h3>產地直供 × 品質把關</h3><p>垂直整合確保原料品質，提升農民收益並降低浪費。</p></div>
+        <div class="card"><h3>科學驗證 × 穩定品質</h3><p>以萃取與定量確保機能成分活性與品質穩定。</p></div>
+        <div class="card"><h3>雙軌產品線 × 分散風險</h3><p>食品級與非食品級並行，營收更穩定、永續形象更完整。</p></div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <h2 class="section-title">影響力與成效</h2>
+      <p class="section-sub">以循環經濟驅動：健康促進、農業升級、環境永續同步實現。</p>
+      <div class="grid cols-3">
+        <div class="card"><div class="impact-head"><div class="impact-icon grow"><img src="images/image57.png" alt="" /></div><div class="impact-title grow">成長</div></div><p>機能巧克力與茶包導入後，預期年銷售額提升約 30–40%。</p></div>
+        <div class="card"><div class="impact-head"><div class="impact-icon sus"><img src="images/sdg12.png" alt="" /></div><div class="impact-title sus">永續</div></div><p>提升可可副產物再利用率，降低農業廢棄與環境負擔。</p></div>
+        <div class="card"><div class="impact-head"><div class="impact-icon coop"><img src="images/image8.png" alt="" /></div><div class="impact-title coop">合作</div></div><p>拓展 B2B 研發合作與技術服務，建立長期夥伴關係。</p></div>
+      </div>
+    </section>
+
+    <section aria-label="行動呼籲">
+      <div class="cta">
+        <div>
+          <h2>把舒眠與永續，做進你的日常</h2>
+          <p>想找「天然舒眠產品」、導入「GABA 原料」，或合作「可可生物炭永續材料」都歡迎聯絡。</p>
+        </div>
+        <div class="btns" style="margin-top:0">
+          <a class="btn" href="#contact">立即聯絡</a>
+          <a class="btn secondary" href="#products">看產品</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">聯絡我們</h2>
+      <p class="section-sub">你可以先用表單留下訊息（示範模式），或直接替換下方 Email/電話為你們的真實資訊。</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>聯絡資訊</h3>
+          <ul class="list">
+            <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">contact@yourcompany.com</span></span></li>
+            <li><span class="tick">✓</span><span><b>電話：</b><span id="phoneText">02-1234-5678</span></span></li>
+          </ul>
+          <p style="margin-top:10px;color:var(--muted);font-size:12px">要讓表單真的寄到信箱：可接 Formspree 或你們後端 API。</p>
+        </div>
+        <div class="card">
+          <h3>快速留言</h3>
+          <form id="contactForm">
+            <div class="contact-grid">
+              <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required></div>
+              <div><label for="company">公司/單位</label><input id="company" name="company" placeholder="（選填）"></div>
+              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="name@example.com" required></div>
+              <div><label for="topic">想了解</label><input id="topic" name="topic" placeholder="舒眠巧克力 / 原料合作 / 生物炭應用..."></div>
+            </div>
+            <div style="margin-top:12px">
+              <label for="message">訊息內容</label>
+              <textarea id="message" name="message" placeholder="請簡述你的需求，我們會盡快回覆。" required></textarea>
+            </div>
+            <div class="btns" style="margin-top:12px">
+              <button class="btn" type="submit">送出訊息</button>
+              <button class="btn secondary" type="button" id="copyEmail">複製 Email</button>
+            </div>
+            <div id="formNote" style="margin-top:10px;color:var(--muted);font-size:12px" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; font-weight:900; color:var(--text)">
+            <span class="dot" aria-hidden="true"></span>
+            <img class="brand-icon" src="images/image17.png" alt="Mr. cocoa ANT / 品牌圖示">
+            <span>LIGHT UP! 可可研究所</span>
+          </div>
+          <div style="font-size:12px;margin-top:8px">© <span id="year"></span> LIGHT UP! All rights reserved.</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const CONTACT = { email: "contact@yourcompany.com", phone: "02-1234-5678" };
+    document.getElementById("emailText").textContent = CONTACT.email;
+    document.getElementById("phoneText").textContent = CONTACT.phone;
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("copyEmail").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(CONTACT.email); toast("已複製 Email：" + CONTACT.email); }
+      catch (e) { toast("複製失敗，請手動複製：" + CONTACT.email); }
+    });
+
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      toast(`已收到（示範模式未送出）：\n姓名：${data.name}\nEmail：${data.email}\n主題：${data.topic || "-"}\n訊息：${data.message}`);
+      e.target.reset();
+    });
+
+    const note = document.getElementById("formNote");
+    let t;
+    function toast(text){ clearTimeout(t); note.textContent = text; t = setTimeout(() => { note.textContent = ""; }, 4200); }
+  </script>
+</body>
+</html>
