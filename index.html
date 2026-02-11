@@ -704,7 +704,7 @@ html, body{
           </div>
         <div class="card">
           <h3>快速留言</h3>
-          <form id="quickForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/formResponse" method="POST" target="hidden_iframe">
+          <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/formResponse" method="POST" target="hidden_iframe">
 <iframe name="hidden_iframe" style="display:none;"></iframe>
 
             <div class="contact-grid">
@@ -767,94 +767,7 @@ html, body{
     function toast(text){ clearTimeout(t); note.textContent = text; t = setTimeout(() => { note.textContent = ""; }, 4200); }
   </script>
 
-<script>
-/* contact helpers (clipboard + google form) */
-(function() {
-  const CONTACT_EMAIL = "NPUSTfs101@gmail.com";
-  const FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/viewform?usp=pp_url";
-  const ENTRY_NAME = "1764960524";
-  const ENTRY_EMAIL = "658803557";
-  const ENTRY_MSG = "215893928";
 
-  function legacyCopy(text) {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "fixed";
-    ta.style.top = "-9999px";
-    ta.style.left = "-9999px";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
-    ta.setSelectionRange(0, ta.value.length);
-    const ok = document.execCommand("copy");
-    ta.remove();
-    return ok;
-  }
-
-  function copyEmail(e) {
-    if (e) e.preventDefault();
-    const success = () => alert("已複製 Email：" + CONTACT_EMAIL);
-    const fail = () => prompt("無法自動複製，請手動複製：", CONTACT_EMAIL);
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(CONTACT_EMAIL)
-        .then(success)
-        .catch(() => (legacyCopy(CONTACT_EMAIL) ? success() : fail()));
-    } else {
-      (legacyCopy(CONTACT_EMAIL) ? success() : fail());
-    }
-  }
-
-  function openGoogleForm(formEl) {
-    if (window.__googleFormOpenedOnce) return;
-    window.__googleFormOpenedOnce = true;
-    setTimeout(() => { window.__googleFormOpenedOnce = false; }, 1500);
-
-    const data = Object.fromEntries(new FormData(formEl).entries());
-    const name = (data.name || "").trim();
-    const email = (data.email || "").trim();
-    const org = (data.org || "").trim();    const msg = (data.message || "").trim();
-
-    const mergedMsg = [
-      org ? `公司/單位：${org}` : "",      msg ? `\n${msg}` : ""
-    ].filter(Boolean).join("\n");
-
-    const url = `${FORM_BASE}&entry.${ENTRY_NAME}=${encodeURIComponent(name)}&entry.${ENTRY_EMAIL}=${encodeURIComponent(email)}&entry.${ENTRY_MSG}=${encodeURIComponent(mergedMsg)}`;
-
-    window.location.href = url;}
-
-  function wire() {
-    const copyBtn = document.getElementById("copyEmailBtn") || document.getElementById("copyEmail");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", (e) => {
-        e.stopImmediatePropagation();
-        copyEmail(e);
-      }, true);
-    }
-    const form = document.getElementById("contactForm") || document.querySelector('#contact form');
-
-    const sendBtn = document.getElementById("sendMsgBtn");
-    if (sendBtn) {
-      sendBtn.addEventListener("click", (e) => {
-        // in case button triggers submit in some browsers
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        const form = document.getElementById("contactForm") || document.querySelector('#contact form');
-        if (form) openGoogleForm(form);
-      }, true);
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", wire);
-  } else {
-    wire();
-  }
-})();
-
-</script>
 
 
 <script>
@@ -870,6 +783,103 @@ html, body{
       }catch(e){}
     }, 300);
   });
+})();
+</script>
+
+
+<script>
+(function(){
+  const FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/viewform?usp=pp_url";
+  const COMPANY_EMAIL = "NPUSTfs101@gmail.com";
+
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function enc(v){ return encodeURIComponent((v||"").trim()); }
+
+  function buildPrefillURL() {
+    const form = document.getElementById("contactForm") || document.querySelector("#contact form");
+    if(!form) return FORM_BASE;
+
+    const name = qs('input[name="name"]', form)?.value || "";
+    const org  = qs('input[name="org"]', form)?.value || "";
+    const email= qs('input[name="email"]', form)?.value || "";
+    const phone= qs('input[name="phone"]', form)?.value || "";
+    const msg  = qs('textarea[name="message"]', form)?.value || "";
+
+    // 把公司/單位一起帶到「欲購買之商品及數量」欄位，避免找不到對應 entry
+    const mergedMsg = [org && ("公司/單位：" + org), phone && ("電話：" + phone), msg].filter(Boolean).join("\n");
+
+    // entry 對照：姓名=1764960524、電話=760389700、Email=658803557、欲購買商品及數量=215893928
+    let url = FORM_BASE
+      + "&entry.1764960524=" + enc(name)
+      + "&entry.760389700=" + enc(phone)
+      + "&entry.658803557=" + enc(email)
+      + "&entry.215893928=" + enc(mergedMsg);
+
+    return url;
+  }
+
+  async function copyToClipboard(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch(e) {}
+    // fallback
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  function wire() {
+    const form = document.getElementById("contactForm") || document.querySelector("#contact form");
+    const sendBtn = document.getElementById("sendMsgBtn");
+    const copyBtn = document.getElementById("copyEmailBtn");
+
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const ok = await copyToClipboard(COMPANY_EMAIL);
+        copyBtn.classList.add("is-copied");
+        copyBtn.textContent = ok ? "已複製" : "複製失敗";
+        setTimeout(() => {
+          copyBtn.classList.remove("is-copied");
+          copyBtn.textContent = "複製 Email";
+        }, 1200);
+      });
+    }
+
+    function goForm(e) {
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      window.location.href = buildPrefillURL();
+      return false;
+    }
+
+    // 送出訊息：直接跳到 Google 表單（帶入資料），不要在頁面其他地方塞字
+    if (sendBtn) {
+      sendBtn.addEventListener("click", goForm);
+    }
+    if (form) {
+      form.addEventListener("submit", goForm);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wire);
+  } else {
+    wire();
+  }
 })();
 </script>
 
