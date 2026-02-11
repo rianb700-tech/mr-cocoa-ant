@@ -703,25 +703,23 @@ html, body{
 
           </div>
         <div class="card">
-          <h3>快速留言</h3>
-          <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/formResponse" method="POST" target="hidden_iframe">
-<iframe name="hidden_iframe" style="display:none;"></iframe>
-
-            <div class="contact-grid">
-              <div><label for="name">姓名</label><input id="name" name="entry.1764960524" placeholder="王小明" required></div>
-              <div><label for="company">公司/單位</label><input id="company" name="entry.1366533870" placeholder="（選填）"></div>
-              <div><label for="email">Email</label><input id="email" name="entry.658803557" type="email" placeholder="NPUSTfs101@gmail.com" required></div>
+          <h3>快速訂購</h3>
+          <form id="contactForm">
+<div class="contact-grid">
+              <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required></div>
+              <div><label for="company">公司/單位</label><input id="company" name="company" placeholder="（選填）"></div>
+              <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="NPUSTfs101@gmail.com" required></div>
         <div class="field">
           <label>電話</label>
-          <input type="tel" name="entry.760389700" placeholder="09xx-xxx-xxx" inputmode="tel" autocomplete="tel">
+          <input type="tel"  id="phone" name="phone" placeholder="09xx-xxx-xxx" inputmode="tel" autocomplete="tel">
         </div>
               </div>
             <div style="margin-top:12px">
               <label for="message">欲購買之商品及數量 ex:巧克力2盒</label>
-              <textarea id="message" name="entry.215893928" placeholder="請填寫：欲購買之商品及數量 ex:巧克力2盒" required></textarea>
+              <textarea id="message" name="message" placeholder="請填寫：欲購買之商品及數量 ex:巧克力2盒" required></textarea>
             </div>
             <div class="btns" style="margin-top:12px">
-              <button class="btn" type="button" id="sendMsgBtn">送出訊息</button>
+              <button class="btn" type="button" id="sendMsgBtn">前往訂購</button>
               <button class="btn secondary" type="button" id="copyEmail">複製 Email</button>
             </div>
             <div id="formNote" style="margin-top:10px;color:var(--muted);font-size:12px" aria-live="polite"></div>
@@ -744,47 +742,7 @@ html, body{
     </footer>
   </main>
 
-  <script>
-    const CONTACT = { email: "NPUSTfs101@gmail.com", phone: "02-1234-5678" };
-    document.getElementById("emailText").textContent = CONTACT.email;
-    document.getElementById("phoneText").textContent = CONTACT.phone;
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    document.getElementById("copyEmail").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(CONTACT.email); toast("已複製 Email：" + CONTACT.email); }
-      catch (e) { toast("複製失敗，請手動複製：" + CONTACT.email); }
-    });
-
-    document.getElementById("contactForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target).entries());
-      toast(`已收到（示範模式未送出）：\n姓名：${data.name}\nEmail：${data.email}\n主題：${data.topic || "-"}\n訊息：${data.message}`);
-      e.target.reset();
-    });
-
-    const note = document.getElementById("formNote");
-    let t;
-    function toast(text){ clearTimeout(t); note.textContent = text; t = setTimeout(() => { note.textContent = ""; }, 4200); }
-  </script>
-
-
-
-
-<script>
-(function(){
-  const f = document.getElementById('quickForm');
-  if(!f) return;
-  f.addEventListener('submit', function(){
-    // let the POST go to hidden iframe; then clear fields
-    setTimeout(function(){
-      try{
-        f.reset();
-        alert('已送出！我們會盡快回覆。');
-      }catch(e){}
-    }, 300);
-  });
-})();
-</script>
+  
 
 
 <script>
@@ -792,94 +750,88 @@ html, body{
   const FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/viewform?usp=pp_url";
   const COMPANY_EMAIL = "NPUSTfs101@gmail.com";
 
-  function qs(sel, root=document){ return root.querySelector(sel); }
-  function enc(v){ return encodeURIComponent((v||"").trim()); }
+  const entry = {
+    name: "entry.1764960524",
+    phone: "entry.760389700",
+    email: "entry.658803557",
+    // 依照最新的 Google 表單預填網址對應：
+    // - 公司/單位 -> entry.215893928
+    // - 欲購買之商品及數量(訊息內容) -> entry.1366533870
+    company: "entry.215893928",
+    message: "entry.1366533870"
+  };
 
-  function buildPrefillURL() {
-    const form = document.getElementById("contactForm") || document.querySelector("#contact form");
-    if(!form) return FORM_BASE;
+  function $(id){ return document.getElementById(id); }
+  function val(id){ const el=$(id); return el ? (el.value||"").trim() : ""; }
 
-    const name = qs('input[name="name"]', form)?.value || "";
-    const org  = qs('input[name="org"]', form)?.value || "";
-    const email= qs('input[name="email"]', form)?.value || "";
-    const phone= qs('input[name="phone"]', form)?.value || "";
-    const msg  = qs('textarea[name="message"]', form)?.value || "";
+  function buildUrl(){
+    const params = new URLSearchParams();
+    const name = val("name");
+    const phone = val("phone");
+    const email = val("email");
+    const company = val("company");
+    const message = val("message");
 
-    // 把公司/單位一起帶到「欲購買之商品及數量」欄位，避免找不到對應 entry
-    const mergedMsg = [org && ("公司/單位：" + org), phone && ("電話：" + phone), msg].filter(Boolean).join("\n");
+    if(name) params.set(entry.name, name);
+    if(phone) params.set(entry.phone, phone);
+    if(email) params.set(entry.email, email);
 
-    // entry 對照：姓名=1764960524、電話=760389700、Email=658803557、欲購買商品及數量=215893928
-    let url = FORM_BASE
-      + "&entry.1764960524=" + enc(name)
-      + "&entry.760389700=" + enc(phone)
-      + "&entry.658803557=" + enc(email)
-      + "&entry.215893928=" + enc(mergedMsg);
+    // 公司/單位與訊息內容一起帶到表單（若表單有公司欄位也同時填入）
+    if(company) params.set(entry.company, company);
+    if(message) params.set(entry.message, message);
 
-    return url;
+    const qs = params.toString();
+    return FORM_BASE + (qs ? ("&" + qs) : "");
   }
 
-  async function copyToClipboard(text) {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
+  async function copyText(text){
+    try{
+      if(navigator.clipboard && window.isSecureContext){
         await navigator.clipboard.writeText(text);
         return true;
       }
-    } catch(e) {}
-    // fallback
-    try {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.setAttribute("readonly", "");
-      ta.style.position = "fixed";
-      ta.style.top = "-9999px";
+    }catch(e){}
+    try{
+      const ta=document.createElement("textarea");
+      ta.value=text;
+      ta.setAttribute("readonly","");
+      ta.style.position="fixed";
+      ta.style.top="-9999px";
       document.body.appendChild(ta);
       ta.select();
-      const ok = document.execCommand("copy");
+      const ok=document.execCommand("copy");
       document.body.removeChild(ta);
       return ok;
-    } catch(e) {
-      return false;
-    }
+    }catch(e){ return false; }
   }
 
-  function wire() {
-    const form = document.getElementById("contactForm") || document.querySelector("#contact form");
-    const sendBtn = document.getElementById("sendMsgBtn");
-    const copyBtn = document.getElementById("copyEmailBtn");
+  function wire(){
+    const form = $("contactForm");
+    const sendBtn = $("sendMsgBtn");
+    const copyBtn = $("copyEmailBtn") || $("copyEmail");
+    const note = $("formNote");
 
-    if (copyBtn) {
-      copyBtn.addEventListener("click", async (e) => {
+    function go(e){
+      if(e) e.preventDefault();
+      const url = buildUrl();
+      window.location.href = url;
+    }
+
+    if(sendBtn) sendBtn.addEventListener("click", go);
+    if(form) form.addEventListener("submit", go);
+
+    if(copyBtn){
+      copyBtn.addEventListener("click", async (e)=>{
         e.preventDefault();
-        const ok = await copyToClipboard(COMPANY_EMAIL);
-        copyBtn.classList.add("is-copied");
-        copyBtn.textContent = ok ? "已複製" : "複製失敗";
-        setTimeout(() => {
-          copyBtn.classList.remove("is-copied");
-          copyBtn.textContent = "複製 Email";
-        }, 1200);
+        const ok = await copyText(COMPANY_EMAIL);
+        if(note) note.textContent = ok ? "已複製 Email" : "複製失敗（請手動複製）";
+        if(ok) setTimeout(()=>{ if(note) note.textContent=""; }, 1200);
       });
     }
-
-    function goForm(e) {
-      if(e){ e.preventDefault(); e.stopPropagation(); }
-      window.location.href = buildPrefillURL();
-      return false;
-    }
-
-    // 送出訊息：直接跳到 Google 表單（帶入資料），不要在頁面其他地方塞字
-    if (sendBtn) {
-      sendBtn.addEventListener("click", goForm);
-    }
-    if (form) {
-      form.addEventListener("submit", goForm);
-    }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", wire);
-  } else {
-    wire();
-  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
 })();
 </script>
 
