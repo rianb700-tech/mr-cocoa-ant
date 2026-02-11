@@ -425,7 +425,6 @@
 
     <section id="contact">
       <h2 class="section-title">聯絡我們</h2>
-      <p class="section-sub">你可以先用表單留下訊息（示範模式），或直接替換下方 Email/電話為你們的真實資訊。</p>
       <div class="grid cols-2">
         <div class="card">
           <h3>聯絡資訊</h3>
@@ -437,8 +436,7 @@
           <img src="images/line-qr.png" alt="LINE QR Code">
         </div>
 
-          <p style="margin-top:10px;color:var(--muted);font-size:12px">要讓表單真的寄到信箱：可接 Formspree 或你們後端 API。</p>
-        </div>
+          </div>
         <div class="card">
           <h3>快速留言</h3>
           <form id="contactForm">
@@ -446,14 +444,13 @@
               <div><label for="name">姓名</label><input id="name" name="name" placeholder="王小明" required></div>
               <div><label for="company">公司/單位</label><input id="company" name="company" placeholder="（選填）"></div>
               <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="NPUSTfs101@gmail.com" required></div>
-              <div><label for="topic">想了解</label><input id="topic" name="topic" placeholder="舒眠巧克力 / 原料合作 / 生物炭應用..."></div>
-            </div>
+              </div>
             <div style="margin-top:12px">
-              <label for="message">訊息內容</label>
-              <textarea id="message" name="message" placeholder="請簡述你的需求，我們會盡快回覆。" required></textarea>
+              <label for="message">欲購買之商品及數量 ex:巧克力2盒</label>
+              <textarea id="message" name="message" placeholder="請填寫：欲購買之商品及數量 ex:巧克力2盒" required></textarea>
             </div>
             <div class="btns" style="margin-top:12px">
-              <button class="btn" type="submit">送出訊息</button>
+              <button class="btn" type="button" id="sendMsgBtn">送出訊息</button>
               <button class="btn secondary" type="button" id="copyEmail">複製 Email</button>
             </div>
             <div id="formNote" style="margin-top:10px;color:var(--muted);font-size:12px" aria-live="polite"></div>
@@ -498,5 +495,94 @@
     let t;
     function toast(text){ clearTimeout(t); note.textContent = text; t = setTimeout(() => { note.textContent = ""; }, 4200); }
   </script>
+
+<script>
+/* contact helpers (clipboard + google form) */
+(function() {
+  const CONTACT_EMAIL = "NPUSTfs101@gmail.com";
+  const FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSeLxnt7i4hgNgDjbGmrcp7V3DYY7682H5NSMrhyzTWDsCfkCA/viewform?usp=pp_url";
+  const ENTRY_NAME = "1764960524";
+  const ENTRY_EMAIL = "658803557";
+  const ENTRY_MSG = "215893928";
+
+  function legacyCopy(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    ta.style.left = "-9999px";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    const ok = document.execCommand("copy");
+    ta.remove();
+    return ok;
+  }
+
+  function copyEmail(e) {
+    if (e) e.preventDefault();
+    const success = () => alert("已複製 Email：" + CONTACT_EMAIL);
+    const fail = () => prompt("無法自動複製，請手動複製：", CONTACT_EMAIL);
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(CONTACT_EMAIL)
+        .then(success)
+        .catch(() => (legacyCopy(CONTACT_EMAIL) ? success() : fail()));
+    } else {
+      (legacyCopy(CONTACT_EMAIL) ? success() : fail());
+    }
+  }
+
+  function openGoogleForm(formEl) {
+    if (window.__googleFormOpenedOnce) return;
+    window.__googleFormOpenedOnce = true;
+    setTimeout(() => { window.__googleFormOpenedOnce = false; }, 1500);
+
+    const data = Object.fromEntries(new FormData(formEl).entries());
+    const name = (data.name || "").trim();
+    const email = (data.email || "").trim();
+    const org = (data.org || "").trim();    const msg = (data.message || "").trim();
+
+    const mergedMsg = [
+      org ? `公司/單位：${org}` : "",      msg ? `\n${msg}` : ""
+    ].filter(Boolean).join("\n");
+
+    const url = `${FORM_BASE}&entry.${ENTRY_NAME}=${encodeURIComponent(name)}&entry.${ENTRY_EMAIL}=${encodeURIComponent(email)}&entry.${ENTRY_MSG}=${encodeURIComponent(mergedMsg)}`;
+
+    window.location.href = url;}
+
+  function wire() {
+    const copyBtn = document.getElementById("copyEmailBtn") || document.getElementById("copyEmail");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", (e) => {
+        e.stopImmediatePropagation();
+        copyEmail(e);
+      }, true);
+    }
+    const form = document.getElementById("contactForm") || document.querySelector('#contact form');
+
+    const sendBtn = document.getElementById("sendMsgBtn");
+    if (sendBtn) {
+      sendBtn.addEventListener("click", (e) => {
+        // in case button triggers submit in some browsers
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const form = document.getElementById("contactForm") || document.querySelector('#contact form');
+        if (form) openGoogleForm(form);
+      }, true);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", wire);
+  } else {
+    wire();
+  }
+})();
+</script>
+
 </body>
 </html>
