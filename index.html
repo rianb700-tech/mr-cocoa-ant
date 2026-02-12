@@ -26,6 +26,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
 
+
+
     :root{
       --bg:#ffffff;
       --card:#ffffff;
@@ -503,7 +505,29 @@ html, body{
   .brand{flex: 1 1 100%; justify-content:center;}
   .brand-logo{height:64px; margin-right:10px;}
   .nav-links{flex: 1 1 100%; justify-content:center; flex-wrap:wrap; gap:8px;}
-  .nav-links a{padding:6px 10px; font-size:13px;
+  .nav-links a{padding:6px 10px; font-size:13px;}
+}
+
+
+/* QR pair (LINE + 表單)
+   - Keep two QR codes side-by-side (avoid vertical stacking)
+   - Auto-fit within the contact card and shrink on smaller screens */
+.qr-pair{margin-top:14px; display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:nowrap}
+.qr-pair img{
+  flex:1 1 0;
+  width:0;                 /* let flex decide size */
+  max-width:190px;         /* desktop size */
+  aspect-ratio:1 / 1;
+  object-fit:contain;
+  border-radius:14px;
+  border:1px solid rgba(140,120,80,.18);
+  background:#fff;
+  padding:8px;
+  box-shadow:0 10px 24px rgba(0,0,0,.10);
+}
+@media (max-width: 520px){ .qr-pair{gap:10px} .qr-pair img{max-width:150px} }
+
+
 </style>
 </head>
 <body>
@@ -722,8 +746,9 @@ html, body{
             <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">NPUSTfs101@gmail.com</span></span></li>
             <li><span class="tick">✓</span><span><b>LINE：</b>掃描下方 QR 加入</span></li>
 </ul>
-        <div class="line-qr">
+        <div class="qr-pair">
           <img src="images/line-qr.png" alt="LINE QR Code">
+          <img src="images/form-qr.png" alt="訂購表單 QR Code">
         </div>
 
           </div>
