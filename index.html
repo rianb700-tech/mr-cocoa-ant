@@ -25,6 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
+
     :root{
       --bg:#ffffff;
       --card:#ffffff;
@@ -348,36 +349,16 @@ h1,h2,h3{
 
 
 /* slogan banner: bring image+text closer toward center */
-.slogan-banner{
-  justify-content: center;
-  gap: 8px;
-}
-.slogan-img{
-  transform: translateX(6%);
-}
-.slogan-copy{
-  transform: translateX(18%);
-}
+.slogan-banner{justify-content:center; gap:12px;}
+.slogan-img{margin-left:6px;}
+.slogan-copy{margin-left:18px;}
 @media (max-width: 820px){
-  .slogan-img{ transform: none; }
-  .slogan-copy{ transform: none; }
+  .slogan-img{margin-left:0;}
+  .slogan-copy{margin-left:0;}
+}
+.slogan-copy{ transform: none; }
 }
 
-
-/* header tweaks: bigger left icon, bolder right nav */
-.header .brand img,
-.header .brand .logo,
-.navbar .brand img,
-.navbar .brand .logo{
-  width: 48px !important;
-  height: 48px !important;
-}
-.header nav a,
-.navbar nav a,
-.header .nav a,
-.navbar .nav a{
-  font-weight: 700;
-}
 
 .header .brand svg,
 .navbar .brand svg{
@@ -497,7 +478,7 @@ html, body{
 
 
 /* Mobile header fix */
- (max-width: 640px){
+@media (max-width: 640px){
   .nav-inner{flex-wrap:wrap; justify-content:center; gap:10px; padding:12px 14px;}
   .brand{flex:1 1 100%; justify-content:center;}
   .nav-links{flex:1 1 100%; justify-content:center; flex-wrap:wrap; gap:10px;}
@@ -505,6 +486,24 @@ html, body{
   .brand-icon{width:34px; height:34px;}
 }
 
+
+
+/* Nav link weight */
+.nav-links a{font-weight:700;}
+
+/* Contact form: tighten on phones */
+@media (max-width: 640px){
+  .contact-grid{grid-template-columns: 1fr; gap:12px;}
+  input, textarea{border-radius:16px;}
+}
+
+/* Mobile nav: wrap and center to avoid overlap */
+@media (max-width: 640px){
+  .nav-inner{flex-wrap:wrap; justify-content:center; gap:10px; padding:12px 0;}
+  .brand{flex: 1 1 100%; justify-content:center;}
+  .brand-logo{height:64px; margin-right:10px;}
+  .nav-links{flex: 1 1 100%; justify-content:center; flex-wrap:wrap; gap:8px;}
+  .nav-links a{padding:6px 10px; font-size:13px;
 </style>
 </head>
 <body>
@@ -721,7 +720,7 @@ html, body{
           <h3>聯絡資訊</h3>
           <ul class="list">
             <li><span class="tick">✓</span><span><b>Email：</b><span id="emailText">NPUSTfs101@gmail.com</span></span></li>
-            <li><span class="tick">✓</span><span><b>LINE：</b>掃描右側 QR 加入</span></li>
+            <li><span class="tick">✓</span><span><b>LINE：</b>掃描下方 QR 加入</span></li>
 </ul>
         <div class="line-qr">
           <img src="images/line-qr.png" alt="LINE QR Code">
